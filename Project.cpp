@@ -1,6 +1,8 @@
 #include <iostream>
 #include "MacUILib.h"
 #include "objPos.h"
+#include "GameMechs.h"
+#include "Player.h"
 
 using namespace std;
 
@@ -16,43 +18,15 @@ void LoopDelay(void);
 void CleanUp(void);
 
 
-
-class Player
-{ 
-    public:
-        enum Dir {LEFT, RIGHT, UP, DOWN, STOP}; // This is the direction state
-
-        Player(){
-            playerPos.pos->x = 10;
-            playerPos.pos->y = 5;
-            playerPos.symbol = '*';
-        };
-        ~Player();
-
-        objPos getPlayerPos() const {
-            return playerPos;
-        }; // Upgrade this in iteration 3.       
-        void updatePlayerDir();
-        void movePlayer();
-
-        // More methods to be added here
-
-    private:
-        objPos playerPos; // Upgrade this in iteration 3.       
-        enum Dir myDir;
-
-        // Need a reference to the Main Game Mechanisms
-};
-
 Player* player;
-
+GameMechs* gameBoard;
 
 int main(void)
 {
 
     Initialize();
 
-    while(exitFlag == false)  
+    while(gameBoard->getExitFlagStatus() == false)  
     {
         GetInput();
         RunLogic();
@@ -70,13 +44,14 @@ void Initialize(void)
     MacUILib_init();
     MacUILib_clearScreen();
 
-    player = new Player();
-    exitFlag = false;
+    gameBoard = new GameMechs(40,20);
+    player = new Player(gameBoard);
+    // exitFlag = false;
 }
 
 void GetInput(void)
 {
-   
+   gameBoard->getInput();
 }
 
 void RunLogic(void)
@@ -90,12 +65,12 @@ void DrawScreen(void)
 
     int i;
     int j;
-    for (i = 0; i < 10; i++) {
-        for (j = 0; j < 10; j++) {
-            if (i == player->getPlayerPos().pos->x && j == player->getPlayerPos().pos->y) {
+    for (i = 0; i < gameBoard->getBoardSizeY(); i++) {
+        for (j = 0; j < gameBoard->getBoardSizeX(); j++) {
+            if (i == player->getPlayerPos().pos->y && j == player->getPlayerPos().pos->x) {
                 MacUILib_printf("%c", player->getPlayerPos().symbol);
             }
-            else if (i == 0 || i == 10 - 1 || j == 0 || j == 10 - 1) {
+            else if (i == 0 || i == gameBoard->getBoardSizeY() - 1 || j == 0 || j == gameBoard->getBoardSizeX() - 1) {
                 MacUILib_printf("#");
             } else {
                 MacUILib_printf(" ");
@@ -103,6 +78,8 @@ void DrawScreen(void)
         }
         MacUILib_printf("\n");  // Move to the next row
     }
+
+    
 
 }
 
