@@ -32,6 +32,7 @@ int main(void)
         RunLogic();
         DrawScreen();
         LoopDelay();
+
     }
 
     CleanUp();
@@ -44,18 +45,21 @@ void Initialize(void)
     MacUILib_init();
     MacUILib_clearScreen();
 
-    gameBoard = new GameMechs(40,20);
+    gameBoard = new GameMechs();
     player = new Player(gameBoard);
     // exitFlag = false;
 }
 
 void GetInput(void)
 {
-   gameBoard->getInput();
+    gameBoard->getSnakeInput();
+    MacUILib_printf("%c", gameBoard->getInput());
 }
 
 void RunLogic(void)
 {
+    player->updatePlayerDir();
+    player->movePlayer();
     
 }
 
@@ -78,7 +82,6 @@ void DrawScreen(void)
         }
         MacUILib_printf("\n");  // Move to the next row
     }
-
     
 
 }

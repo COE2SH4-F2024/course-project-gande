@@ -3,8 +3,8 @@
 
 GameMechs::GameMechs()
 {
-    boardSizeX = 20;
-    boardSizeY = 10;
+    boardSizeX = 30;
+    boardSizeY = 15;
     input = 0;
 }
 
@@ -27,13 +27,25 @@ bool GameMechs::getExitFlagStatus() const
 
 bool GameMechs::getLoseFlagStatus() const
 {
+
     return loseFlag;
 }
     
 
 char GameMechs::getInput() const
 {
-    
+    return input;
+}
+
+
+// PPA 3 logic, sets the input
+char GameMechs::getSnakeInput()
+{
+    if(MacUILib_hasChar()){
+        setInput(MacUILib_getChar());
+        return MacUILib_getChar();
+    }
+
 }
 
 int GameMechs::getScore() const
@@ -59,12 +71,12 @@ int GameMechs::getBoardSizeY() const
 
 void GameMechs::setExitTrue()
 {
-
+    exitFlag = true;
 }
 
 void GameMechs::setLoseFlag()
 {
-    
+    loseFlag = true;
 }
 
 void GameMechs::setInput(char this_input)
@@ -72,9 +84,11 @@ void GameMechs::setInput(char this_input)
     input = this_input;
 }
 
+
+
 void GameMechs::clearInput()
 {
-
+    input = '\0';
 }
 
 // More methods should be added here

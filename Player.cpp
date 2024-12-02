@@ -1,4 +1,5 @@
 #include "Player.h"
+#include "MacUILib.h"
 
 
 Player::Player(GameMechs* thisGMRef)
@@ -6,9 +7,8 @@ Player::Player(GameMechs* thisGMRef)
     mainGameMechsRef = thisGMRef;
     myDir = STOP;
 
-    playerPos = objPos((mainGameMechsRef->getBoardSizeX())/2, (mainGameMechsRef->getBoardSizeY())/2, '*');
-
-
+    // Setting starting position to be in middle of any given sized board
+    playerPos.setObjPos((mainGameMechsRef->getBoardSizeX())/2, (mainGameMechsRef->getBoardSizeY())/2, '*');
     // more actions to be included
 }
 
@@ -27,12 +27,13 @@ objPos Player::getPlayerPos() const
 
 void Player::updatePlayerDir()
 {
-        // PPA3 input processing logic          
+
+
 }
 
 void Player::movePlayer()
 {
-    // PPA3 Finite State Machine logic
+    
 }
 
 // More methods to be added

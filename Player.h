@@ -15,7 +15,7 @@ class Player
 
     
     public:
-        enum Dir {LEFT, RIGHT, UP, DOWN, STOP}; // This is the direction state
+        enum Dir {UP, DOWN, RIGHT, LEFT, STOP}; // This is the direction state
 
         Player(GameMechs* thisGMRef);
         ~Player();
