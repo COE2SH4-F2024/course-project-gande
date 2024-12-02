@@ -16,7 +16,6 @@ Player::Player(GameMechs* thisGMRef)
 Player::~Player()
 {
     // delete any heap members here
-    delete mainGameMechsRef;
 }
 
 objPos Player::getPlayerPos() const
@@ -46,6 +45,20 @@ void Player::updatePlayerDir()
             if(myDir != LEFT) 
                 myDir = RIGHT;
                 break;
+
+        // Exit Key
+        case ' ':
+            mainGameMechsRef->setExitTrue();
+            break;
+
+        // Score increment Debug key
+        case 'i':
+            mainGameMechsRef->incrementScore();
+            break;
+        // Lose flag debug key
+        case 'l':
+            mainGameMechsRef->setLoseFlag();
+            break;
         default:
             break;
     }  

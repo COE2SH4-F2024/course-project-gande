@@ -16,8 +16,6 @@ class GameMechs
         bool exitFlag;
         bool loseFlag;
         int score;
-        int change; // from PPA3 input logic
-
         int boardSizeX;
         int boardSizeY;
 
@@ -34,7 +32,6 @@ class GameMechs
         void setLoseFlag();
 
         char getInput() const;
-        char getSnakeInput();
         void setInput(char this_input);
         void clearInput();
 
@@ -45,6 +42,7 @@ class GameMechs
         void incrementScore();
         
         // More methods should be added here
+        void getSnakeInput(); // Asynchronous Input method copied from PPA3
 };
 
 #endif

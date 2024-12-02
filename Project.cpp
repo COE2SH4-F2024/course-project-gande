@@ -32,7 +32,6 @@ int main(void)
         RunLogic();
         DrawScreen();
         LoopDelay();
-
     }
 
     CleanUp();
@@ -47,19 +46,18 @@ void Initialize(void)
 
     gameBoard = new GameMechs();
     player = new Player(gameBoard);
-    // exitFlag = false;
 }
 
 void GetInput(void)
 {
     gameBoard->getSnakeInput();
-    MacUILib_printf("%c", gameBoard->getInput());
 }
 
 void RunLogic(void)
 {
     player->updatePlayerDir();
     player->movePlayer();
+    gameBoard->clearInput();
     
 }
 
@@ -82,6 +80,14 @@ void DrawScreen(void)
         }
         MacUILib_printf("\n");  // Move to the next row
     }
+    MacUILib_printf("Score: %d\n", gameBoard->getScore());
+
+    // Testing debugging messages
+    if(gameBoard->getLoseFlagStatus() == true){
+        MacUILib_printf("You Lost the Game");
+    } else if (gameBoard->getExitFlagStatus()) {
+        MacUILib_printf("You are leaving the game");
+    }
     
 
 }
@@ -95,6 +101,5 @@ void LoopDelay(void)
 void CleanUp(void)
 {
     MacUILib_clearScreen();    
-
     MacUILib_uninit();
 }

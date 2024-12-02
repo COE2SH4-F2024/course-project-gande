@@ -3,9 +3,14 @@
 
 GameMechs::GameMechs()
 {
-    boardSizeX = 30;
-    boardSizeY = 15;
     input = 0;
+    score = 0;
+
+    boardSizeX = 30;
+    boardSizeY = 15; 
+
+    exitFlag = false;
+    loseFlag = false;
 }
 
 GameMechs::GameMechs(int boardX, int boardY)
@@ -39,11 +44,10 @@ char GameMechs::getInput() const
 
 
 // PPA 3 logic, sets the input
-char GameMechs::getSnakeInput()
+void GameMechs::getSnakeInput()
 {
     if(MacUILib_hasChar()){
         setInput(MacUILib_getChar());
-        return MacUILib_getChar();
     }
 
 }
@@ -55,7 +59,7 @@ int GameMechs::getScore() const
 
 void GameMechs::incrementScore()
 {
-    
+    score += 1;
 }
 
 int GameMechs::getBoardSizeX() const
@@ -83,8 +87,6 @@ void GameMechs::setInput(char this_input)
 {
     input = this_input;
 }
-
-
 
 void GameMechs::clearInput()
 {
