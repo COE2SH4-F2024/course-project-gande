@@ -8,8 +8,10 @@ objPosArrayList::objPosArrayList()
     arrayCapacity = ARRAY_MAX_CAP;
     listSize = 0;
     aList = new objPos[arrayCapacity];
+    
     for(int i=0; i<listSize; i++){
         aList[i] = objPos();
+
     }
 }
 
@@ -52,6 +54,7 @@ void objPosArrayList::removeHead()
     if (listSize != 0 && listSize == 1){
         aList[0] = objPos(); // reset the only element
         listSize--;
+
     } else {
         for (int i = 0; i < listSize; i++)
         {
@@ -59,6 +62,7 @@ void objPosArrayList::removeHead()
         }
         aList[listSize-1] = objPos(); // reset the last element
         listSize--;
+
     }
 }
 
@@ -67,8 +71,10 @@ void objPosArrayList::removeTail()
     if (listSize>1) {
         aList[listSize-1] = objPos();
         listSize--;
+
     } else if (listSize == 1){
         removeHead();
+
     }
 }
 

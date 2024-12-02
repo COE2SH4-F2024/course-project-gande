@@ -23,6 +23,7 @@ class Player
         objPosArrayList* getPlayerPos() const; // Upgrade this in iteration 3.       
         void updatePlayerDir();
         void movePlayer();
+        bool checkSelfCollision(objPos newHead);
 
         // More methods to be added here
 

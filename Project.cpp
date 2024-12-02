@@ -101,16 +101,7 @@ void DrawScreen(void)
         }
         MacUILib_printf("\n");  // Move to the next row
     }
-    MacUILib_printf("Score: %d\n", player->getPlayerPos()->getSize() - 1);
-
-    // Testing debugging messages
-    if(gameBoard->getLoseFlagStatus() == true){
-        MacUILib_printf("You Lost the Game");
-    } else if (gameBoard->getExitFlagStatus()) {
-        MacUILib_printf("You are leaving the game");
-    }
-    
-
+    MacUILib_printf("Current Score: %d\n", player->getPlayerPos()->getSize() - 1);
 }
 
 void LoopDelay(void)
@@ -121,7 +112,14 @@ void LoopDelay(void)
 
 void CleanUp(void)
 {
-    MacUILib_clearScreen();    
+    MacUILib_clearScreen();  
+
+    if(gameBoard->getLoseFlagStatus()){
+        MacUILib_printf("You Lost the Game\n");
+    } else if (gameBoard->getExitFlagStatus()) {
+        MacUILib_printf("You are now leaving the game\n");
+    }  
+
     MacUILib_uninit();
     delete gameBoard;
     delete player;

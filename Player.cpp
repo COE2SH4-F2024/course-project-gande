@@ -124,14 +124,30 @@ void Player::movePlayer()
     }
 
     updatedHead.setObjPos(headx, heady, '*');
-    playerPosList->insertHead(updatedHead);
-    if(headx == mainGameMechsRef->getFoodPos().pos->x && heady == mainGameMechsRef->getFoodPos().pos->y) {
-        mainGameMechsRef->generateFood(playerPosList);
-    } else {
-        playerPosList->removeTail();
+
+
+    if (!checkSelfCollision(updatedHead)) {
+        playerPosList->insertHead(updatedHead);
+        if(headx == mainGameMechsRef->getFoodPos().pos->x && heady == mainGameMechsRef->getFoodPos().pos->y) {
+            mainGameMechsRef->generateFood(playerPosList);
+        } else {
+            playerPosList->removeTail();
+        }
     }
+    
 
     
+}
+
+bool Player::checkSelfCollision(objPos newHead){
+    for(int i=1; i<playerPosList->getSize(); i++){
+        if(newHead.pos->x == playerPosList->getElement(i).pos->x && newHead.pos->y == playerPosList->getElement(i).pos->y) {
+            mainGameMechsRef->setExitTrue();
+            mainGameMechsRef->setLoseFlag();
+            return true;   
+        }
+    }
+    return false;
 }
 
 // More methods to be added
