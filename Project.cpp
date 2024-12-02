@@ -46,7 +46,7 @@ void Initialize(void)
 
     gameBoard = new GameMechs();
     player = new Player(gameBoard);
-    // gameBoard->generateFood(player->getPlayerPos());
+    gameBoard->generateFood(player->getPlayerPos()->getHeadElement());
 }
 
 void GetInput(void)

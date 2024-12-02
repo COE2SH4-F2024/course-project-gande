@@ -76,9 +76,9 @@ void Player::updatePlayerDir()
             break;
         
         // Generate food debug key
-        case 'g':
-            mainGameMechsRef->generateFood(playerPosList->getHeadElement());
-            break;
+        // case 'g':
+        //     mainGameMechsRef->generateFood(player->getHeadElement());
+        //     break;
 
         default:
             break;
@@ -125,7 +125,13 @@ void Player::movePlayer()
 
     updatedHead.setObjPos(headx, heady, '*');
     playerPosList->insertHead(updatedHead);
-    playerPosList->removeTail();
+    if(headx == mainGameMechsRef->getFoodPos().pos->x && heady == mainGameMechsRef->getFoodPos().pos->y) {
+        mainGameMechsRef->generateFood(playerPosList);
+    } else {
+        playerPosList->removeTail();
+    }
+
+    
 }
 
 // More methods to be added
