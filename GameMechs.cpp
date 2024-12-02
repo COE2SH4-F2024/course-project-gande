@@ -11,6 +11,8 @@ GameMechs::GameMechs()
 
     exitFlag = false;
     loseFlag = false;
+
+    food = objPos(-1,-1,'\0'); // At first the object will be created but will not be visible
 }
 
 GameMechs::GameMechs(int boardX, int boardY)
@@ -94,3 +96,29 @@ void GameMechs::clearInput()
 }
 
 // More methods should be added here
+
+// Variation of PPA3 random generation
+void GameMechs::generateFood(objPos blockOff) {
+
+    // Reset the food object to unvisible location before it spawns on the board
+    // Also used for debugging
+    food.setObjPos(-1,-1,'\0'); 
+
+    int rx;
+    int ry;
+    srand(time(NULL));
+    while(true) {
+        rx = (rand() % (boardSizeX-2)) + 1;
+        ry = (rand() % (boardSizeY-2)) + 1;
+
+        if(rx != blockOff.getObjPos().pos->x && ry != blockOff.getObjPos().pos->y) {
+            food.setObjPos(rx, ry, 'X');
+            break;
+        }
+    }
+
+}
+
+objPos GameMechs::getFoodPos() {
+    return food;
+}
