@@ -6,22 +6,36 @@ Player::Player(GameMechs* thisGMRef)
 {
     mainGameMechsRef = thisGMRef;
     myDir = STOP;
+    playerPosList = new objPosArrayList();
 
-    // Setting starting position to be in middle of any given sized board
-    playerPos.setObjPos((mainGameMechsRef->getBoardSizeX())/2, (mainGameMechsRef->getBoardSizeY())/2, '*');
     // more actions to be included
+    // Initial Snake head inserted to the head of the list
+    objPos snakeHead = objPos();
+    snakeHead.setObjPos((mainGameMechsRef->getBoardSizeX())/2, (mainGameMechsRef->getBoardSizeY())/2, '*');
+    playerPosList->insertHead(snakeHead);
+
+    // Testing multiple lengths;
+    // snakeHead = objPos((mainGameMechsRef->getBoardSizeX())/2 - 2, (mainGameMechsRef->getBoardSizeY())/2, '*');
+    // playerPosList->insertTail(snakeHead);
+    // snakeHead = objPos((mainGameMechsRef->getBoardSizeX())/2 - 1, (mainGameMechsRef->getBoardSizeY())/2, '*');
+    // playerPosList->insertTail(snakeHead);
+    // snakeHead = objPos((mainGameMechsRef->getBoardSizeX())/2 + 1, (mainGameMechsRef->getBoardSizeY())/2, '*');
+    // playerPosList->insertTail(snakeHead);
+    // snakeHead = objPos((mainGameMechsRef->getBoardSizeX())/2 + 3, (mainGameMechsRef->getBoardSizeY())/2, '*');
+    // playerPosList->insertTail(snakeHead);
 }
 
 
 Player::~Player()
 {
     // delete any heap members here
+    delete playerPosList;
 }
 
-objPos Player::getPlayerPos() const
+objPosArrayList* Player::getPlayerPos() const
 {
     // return the reference to the playerPos arrray list
-    return playerPos;
+    return playerPosList;
 }
 
 void Player::updatePlayerDir()
@@ -63,9 +77,9 @@ void Player::updatePlayerDir()
         
         // Generate food debug key
         case 'g':
-            mainGameMechsRef->generateFood(playerPos);
+            mainGameMechsRef->generateFood(playerPosList->getHeadElement());
             break;
-            
+
         default:
             break;
     }  
@@ -75,37 +89,43 @@ void Player::updatePlayerDir()
 void Player::movePlayer()
 {
     // PPA3 Finite State Machine logic
-    int px = playerPos.pos->x;
-    int py = playerPos.pos->y;
     int boardLimitY = mainGameMechsRef->getBoardSizeY()-2;
     int boardLimitX = mainGameMechsRef->getBoardSizeX()-2;
+
+    // The current snake head and its coordinates
+    objPos currentHead = playerPosList->getHeadElement();
+    objPos updatedHead;
+    int headx = currentHead.getObjPos().pos->x;
+    int heady = currentHead.getObjPos().pos->y;
 
     // Logic for movement copied directly from PPA3
     switch(myDir)
     {                      
         case DOWN: 
-            py = (py % boardLimitY)+1;
+            heady = (heady % boardLimitY)+1;
             break;
             
         case UP:
-            py--;
-            if(py < 1) {py = boardLimitY;}
+            heady--;
+            if(heady < 1) {heady = boardLimitY;}
             break;
             
         case LEFT:
-            px--;
-            if(px < 1) {px = boardLimitX;}
+            headx--;
+            if(headx < 1) {headx = boardLimitX;}
             break;
 
         case RIGHT:
-            px = (px % boardLimitX)+1;
+            headx = (headx % boardLimitX)+1;
             break;
 
         default:
             break;
     }
 
-    playerPos.setObjPos(px, py, playerPos.symbol);
+    updatedHead.setObjPos(headx, heady, '*');
+    playerPosList->insertHead(updatedHead);
+    playerPosList->removeTail();
 }
 
 // More methods to be added

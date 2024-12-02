@@ -46,7 +46,7 @@ void Initialize(void)
 
     gameBoard = new GameMechs();
     player = new Player(gameBoard);
-    gameBoard->generateFood(player->getPlayerPos());
+    // gameBoard->generateFood(player->getPlayerPos());
 }
 
 void GetInput(void)
@@ -66,23 +66,38 @@ void DrawScreen(void)
 {
     MacUILib_clearScreen();    
 
-    int i;
-    int j;
-    for (i = 0; i < gameBoard->getBoardSizeY(); i++) {
-        for (j = 0; j < gameBoard->getBoardSizeX(); j++) {
-            if (i == player->getPlayerPos().pos->y && j == player->getPlayerPos().pos->x) {
-                MacUILib_printf("%c", player->getPlayerPos().symbol);
+    int i,j,k;
+    objPos foodPos = gameBoard->getFoodPos();
 
-            } else if (i == gameBoard->getFoodPos().getObjPos().pos->y && j == gameBoard->getFoodPos().getObjPos().pos->x){
-                MacUILib_printf("%c", gameBoard->getFoodPos().symbol);
-
-            } else if (i == 0 || i == gameBoard->getBoardSizeY() - 1 || j == 0 || j == gameBoard->getBoardSizeX() - 1) {
+    for (i = 0; i < gameBoard->getBoardSizeY(); i++)
+    {
+        for (j = 0; j < gameBoard->getBoardSizeX(); j++)
+        {   
+            if (i == 0 || i == gameBoard->getBoardSizeY() - 1 || j == 0 || j == gameBoard->getBoardSizeX()-1) {
                 MacUILib_printf("#");
 
-            } else {
-                MacUILib_printf(" ");
+            } else if (i == foodPos.pos->y && j == foodPos.pos->x){
+                MacUILib_printf("%c", gameBoard->getFoodPos().symbol);
 
-            }
+            } else {
+                bool spotTaken;
+                for (k = 0; k < player->getPlayerPos()->getSize(); k++)
+                {
+                    spotTaken = false;
+                    objPos snakePiece = player->getPlayerPos()->getElement(k).getObjPos();
+                    if (i == snakePiece.pos->y && j == snakePiece.pos->x) {
+                        MacUILib_printf("%c", snakePiece.getSymbol());
+                        spotTaken = true;
+                        break;
+                    } 
+                }
+
+                if(!spotTaken){
+                    MacUILib_printf(" ");
+                }
+
+                
+            } 
         }
         MacUILib_printf("\n");  // Move to the next row
     }
