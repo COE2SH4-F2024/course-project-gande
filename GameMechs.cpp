@@ -98,7 +98,7 @@ void GameMechs::clearInput()
 // More methods should be added here
 
 // Variation of PPA3 random generation
-void GameMechs::generateFood(const objPosArrayList* &blockOff) {
+void GameMechs::generateFood(objPosArrayList* blockOff) {
 
     // Reset the food object to unvisible location before it spawns on the board
     // Also used for debugging
@@ -106,18 +106,16 @@ void GameMechs::generateFood(const objPosArrayList* &blockOff) {
 
     int rx;
     int ry;
-    bool foodSpawned = false;
     srand(time(NULL));
     
 
     for(int i = 0; i < blockOff->getSize(); i++){
-        while(!foodSpawned) {
+        while(true) {
             rx = (rand() % (boardSizeX-2)) + 1;
             ry = (rand() % (boardSizeY-2)) + 1;
 
             if(rx != blockOff->getElement(i).pos->x && ry != blockOff->getElement(i).pos->y) {
                 food.setObjPos(rx, ry, 'X');
-                foodSpawned = true;
                 break;
             }
         }

@@ -46,7 +46,7 @@ void Initialize(void)
 
     gameBoard = new GameMechs();
     player = new Player(gameBoard);
-    gameBoard->generateFood(player->getPlayerPos()->getHeadElement());
+    gameBoard->generateFood(player->getPlayerPos());
 }
 
 void GetInput(void)
@@ -101,7 +101,7 @@ void DrawScreen(void)
         }
         MacUILib_printf("\n");  // Move to the next row
     }
-    MacUILib_printf("Score: %d\n", gameBoard->getScore());
+    MacUILib_printf("Score: %d\n", player->getPlayerPos()->getSize() - 1);
 
     // Testing debugging messages
     if(gameBoard->getLoseFlagStatus() == true){

@@ -43,7 +43,7 @@ class GameMechs
         
         // More methods should be added here
         void getSnakeInput(); // Asynchronous Input method copied from PPA3
-        void generateFood(const objPosArrayList* &blockOff);
+        void generateFood(objPosArrayList* blockOff);
         objPos getFoodPos();
         
 };
