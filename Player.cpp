@@ -130,6 +130,7 @@ void Player::movePlayer()
         playerPosList->insertHead(updatedHead);
         if(headx == mainGameMechsRef->getFoodPos().pos->x && heady == mainGameMechsRef->getFoodPos().pos->y) {
             mainGameMechsRef->generateFood(playerPosList);
+            mainGameMechsRef->updateScore();
         } else {
             playerPosList->removeTail();
         }

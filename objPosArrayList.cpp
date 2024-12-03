@@ -8,7 +8,8 @@ objPosArrayList::objPosArrayList()
     arrayCapacity = ARRAY_MAX_CAP;
     listSize = 0;
     aList = new objPos[arrayCapacity];
-    
+
+    // Initialiing all elements to the default objPos oject
     for(int i=0; i<listSize; i++){
         aList[i] = objPos();
 
@@ -30,12 +31,13 @@ void objPosArrayList::insertHead(objPos thisPos)
     // Shifting the all objPos members to the right
     if (listSize < arrayCapacity) {
 
-        // Starting from the last member we go to the first one, while shifting each one to the right
+        // Starting from the last member, traverse to the first one, while shifting each one to the right
         for (int i = listSize-1; i >= 0 ; i--)
         {
             aList[i+1] = aList[i]; 
         }
 
+        // Setting the Head of snake 
         aList[0] = thisPos;
         listSize++;
     }
@@ -43,6 +45,7 @@ void objPosArrayList::insertHead(objPos thisPos)
 
 void objPosArrayList::insertTail(objPos thisPos)
 {
+    // Inserting object to end of list
     if (listSize < arrayCapacity){
         aList[listSize] = thisPos;
         listSize++;

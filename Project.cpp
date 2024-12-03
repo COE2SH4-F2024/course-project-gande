@@ -44,6 +44,7 @@ void Initialize(void)
     MacUILib_init();
     MacUILib_clearScreen();
 
+    // Initializing Game Mechanics, and Snake Body, and Food object
     gameBoard = new GameMechs();
     player = new Player(gameBoard);
     gameBoard->generateFood(player->getPlayerPos());
@@ -51,11 +52,13 @@ void Initialize(void)
 
 void GetInput(void)
 {
+    // Async input logic from PPA3 
     gameBoard->getSnakeInput();
 }
 
 void RunLogic(void)
 {
+    // Updating Player movements and clearing inputs
     player->updatePlayerDir();
     player->movePlayer();
     gameBoard->clearInput();
@@ -66,6 +69,7 @@ void DrawScreen(void)
 {
     MacUILib_clearScreen();    
 
+    // Drawing logic mainly copied from PPA3
     int i,j,k;
     objPos foodPos = gameBoard->getFoodPos();
 
@@ -74,13 +78,15 @@ void DrawScreen(void)
         for (j = 0; j < gameBoard->getBoardSizeX(); j++)
         {   
             if (i == 0 || i == gameBoard->getBoardSizeY() - 1 || j == 0 || j == gameBoard->getBoardSizeX()-1) {
-                MacUILib_printf("#");
+                MacUILib_printf("#"); // Border
 
             } else if (i == foodPos.pos->y && j == foodPos.pos->x){
                 MacUILib_printf("%c", gameBoard->getFoodPos().symbol);
 
             } else {
                 bool spotTaken;
+
+                // Printing Entire Snake Body
                 for (k = 0; k < player->getPlayerPos()->getSize(); k++)
                 {
                     spotTaken = false;
@@ -93,15 +99,15 @@ void DrawScreen(void)
                 }
 
                 if(!spotTaken){
-                    MacUILib_printf(" ");
+                    MacUILib_printf(" "); // Empty Spaces
                 }
 
                 
             } 
         }
-        MacUILib_printf("\n");  // Move to the next row
+        MacUILib_printf("\n"); 
     }
-    MacUILib_printf("Current Score: %d\n", player->getPlayerPos()->getSize() - 1);
+    MacUILib_printf("Current Score: %d\n", gameBoard->getScore());
 }
 
 void LoopDelay(void)
@@ -113,6 +119,7 @@ void LoopDelay(void)
 void CleanUp(void)
 {
     MacUILib_clearScreen();  
+
 
     if(gameBoard->getLoseFlagStatus()){
         MacUILib_printf("You Lost the Game\n");

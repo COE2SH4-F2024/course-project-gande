@@ -3,16 +3,18 @@
 
 GameMechs::GameMechs()
 {
+    // Starting values
     input = 0;
     score = 0;
 
+    // Default BOard sizing
     boardSizeX = 30;
     boardSizeY = 15; 
 
     exitFlag = false;
     loseFlag = false;
 
-    food = objPos(-1,-1,'\0'); // At first the object will be created but will not be visible
+    food = objPos(); // Initializing the first food object
 }
 
 GameMechs::GameMechs(int boardX, int boardY)
@@ -24,7 +26,7 @@ GameMechs::GameMechs(int boardX, int boardY)
 // do you need a destructor?
 GameMechs::~GameMechs()
 {
-    
+    // No you dont
 }
 
 bool GameMechs::getExitFlagStatus() const
@@ -45,7 +47,7 @@ char GameMechs::getInput() const
 }
 
 
-// PPA 3 logic, sets the input
+// PPA 3 logic, sets the Async input
 void GameMechs::getSnakeInput()
 {
     if(MacUILib_hasChar()){
@@ -99,14 +101,12 @@ void GameMechs::clearInput()
 
 // Variation of PPA3 random generation
 void GameMechs::generateFood(objPosArrayList* blockOff) {
-
-    // Reset the food object to unvisible location before it spawns on the board
-
+    // Random Coordinate Holders
     int rx;
     int ry;
     srand(time(NULL));
     
-
+    // Finding a valid (not a part of snake body) position to spawn the food object
     for(int i = 0; i < blockOff->getSize(); i++){
         while(true) {
             rx = (rand() % (boardSizeX-2)) + 1;
@@ -123,4 +123,8 @@ void GameMechs::generateFood(objPosArrayList* blockOff) {
 
 objPos GameMechs::getFoodPos() {
     return food;
+}
+
+void GameMechs::updateScore(){
+    score += 1;
 }
