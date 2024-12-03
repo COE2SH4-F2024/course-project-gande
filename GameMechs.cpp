@@ -98,7 +98,6 @@ void GameMechs::clearInput()
 }
 
 // More methods should be added here
-
 // Variation of PPA3 random generation
 void GameMechs::generateFood(objPosArrayList* blockOff) {
     // Random Coordinate Holders

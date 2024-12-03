@@ -14,15 +14,6 @@ Player::Player(GameMechs* thisGMRef)
     snakeHead.setObjPos((mainGameMechsRef->getBoardSizeX())/2, (mainGameMechsRef->getBoardSizeY())/2, '*');
     playerPosList->insertHead(snakeHead);
 
-    // Testing multiple lengths;
-    // snakeHead = objPos((mainGameMechsRef->getBoardSizeX())/2 - 2, (mainGameMechsRef->getBoardSizeY())/2, '*');
-    // playerPosList->insertTail(snakeHead);
-    // snakeHead = objPos((mainGameMechsRef->getBoardSizeX())/2 - 1, (mainGameMechsRef->getBoardSizeY())/2, '*');
-    // playerPosList->insertTail(snakeHead);
-    // snakeHead = objPos((mainGameMechsRef->getBoardSizeX())/2 + 1, (mainGameMechsRef->getBoardSizeY())/2, '*');
-    // playerPosList->insertTail(snakeHead);
-    // snakeHead = objPos((mainGameMechsRef->getBoardSizeX())/2 + 3, (mainGameMechsRef->getBoardSizeY())/2, '*');
-    // playerPosList->insertTail(snakeHead);
 }
 
 
@@ -125,7 +116,7 @@ void Player::movePlayer()
 
     updatedHead.setObjPos(headx, heady, '*');
 
-
+    // Only Updating Snake Movement if the next move doesn't cause a collision
     if (!checkSelfCollision(updatedHead)) {
         playerPosList->insertHead(updatedHead);
         if(headx == mainGameMechsRef->getFoodPos().pos->x && heady == mainGameMechsRef->getFoodPos().pos->y) {
@@ -140,7 +131,11 @@ void Player::movePlayer()
     
 }
 
+// More methods to be added
+
 bool Player::checkSelfCollision(objPos newHead){
+    
+    // Checking for any overlaps between the new head and current body
     for(int i=1; i<playerPosList->getSize(); i++){
         if(newHead.pos->x == playerPosList->getElement(i).pos->x && newHead.pos->y == playerPosList->getElement(i).pos->y) {
             mainGameMechsRef->setExitTrue();
@@ -150,5 +145,3 @@ bool Player::checkSelfCollision(objPos newHead){
     }
     return false;
 }
-
-// More methods to be added
