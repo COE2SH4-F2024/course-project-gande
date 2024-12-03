@@ -101,8 +101,6 @@ void GameMechs::clearInput()
 void GameMechs::generateFood(objPosArrayList* blockOff) {
 
     // Reset the food object to unvisible location before it spawns on the board
-    // Also used for debugging
-    food.setObjPos(-1,-1,'\0'); 
 
     int rx;
     int ry;
