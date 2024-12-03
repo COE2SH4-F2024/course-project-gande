@@ -121,9 +121,10 @@ void CleanUp(void)
     MacUILib_clearScreen();  
 
 
-    if(gameBoard->getLoseFlagStatus()){
-        MacUILib_printf("You Lost the Game\n");
-    } else if (gameBoard->getExitFlagStatus()) {
+    if (gameBoard->getLoseFlagStatus()){
+        MacUILib_printf("You Lost the Game\n\na");
+    } 
+    if (gameBoard->getExitFlagStatus()) {
         MacUILib_printf("You are now leaving the game\n");
     }  
 

@@ -66,18 +66,18 @@ void Player::updatePlayerDir()
             break;
 
         // Score increment Debug key
-        case 'i':
-            mainGameMechsRef->incrementScore();
-            break;
+        // case 'i':
+        //     mainGameMechsRef->incrementScore();
+        //     break;
 
         // Lose flag debug key
-        case 'l':
-            mainGameMechsRef->setLoseFlag();
-            break;
+        // case 'l':
+        //     mainGameMechsRef->setLoseFlag();
+        //     break;
         
         // Generate food debug key
         // case 'g':
-        //     mainGameMechsRef->generateFood(player->getHeadElement());
+        //     mainGameMechsRef->generateFood(playerPosList);
         //     break;
 
         default:
